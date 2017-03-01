@@ -8,7 +8,7 @@ public class LRP implements LRPConstants {
     while (true)
     {
       System.out.println("Reading from standard input...");
-      System.out.print("Enter an expression of LRP");
+      System.out.print("Ingrese una expresion de LRP o punto y coma en caso de querer abandonar el programa.");
       try
       {
         switch (LRP.one_line())
@@ -41,15 +41,13 @@ public class LRP implements LRPConstants {
 
   final public int one_line() throws ParseException {
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-    case MINUS:
-    case CONSTANT:
-    case 12:
+    case 14:
+    case 17:
       sum();
-      jj_consume_token(11);
     {if (true) return 0;}
       break;
-    case 11:
-      jj_consume_token(11);
+    case 12:
+      jj_consume_token(12);
     {if (true) return 1;}
       break;
     default:
@@ -61,92 +59,261 @@ public class LRP implements LRPConstants {
   }
 
   final public void sum() throws ParseException {
-    term();
     label_1:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-      case PLUS:
-      case MINUS:
+      case 14:
         ;
         break;
       default:
         jj_la1[1] = jj_gen;
         break label_1;
       }
+      variable();
+    }
+    label_2:
+    while (true) {
+      maquina();
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-      case PLUS:
-        jj_consume_token(PLUS);
-        break;
-      case MINUS:
-        jj_consume_token(MINUS);
+      case 17:
+        ;
         break;
       default:
         jj_la1[2] = jj_gen;
-        jj_consume_token(-1);
-        throw new ParseException();
+        break label_2;
       }
-      term();
     }
-  }
-
-  final public void term() throws ParseException {
-    unary();
-    label_2:
+    label_3:
     while (true) {
+      jj_consume_token(13);
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-      case MULTIPLY:
-      case DIVIDE:
+      case 13:
         ;
         break;
       default:
         jj_la1[3] = jj_gen;
-        break label_2;
+        break label_3;
       }
-      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-      case MULTIPLY:
-        jj_consume_token(MULTIPLY);
-        break;
-      case DIVIDE:
-        jj_consume_token(DIVIDE);
-        break;
-      default:
-        jj_la1[4] = jj_gen;
-        jj_consume_token(-1);
-        throw new ParseException();
-      }
-      unary();
     }
   }
 
-  final public void unary() throws ParseException {
+  final public void variable() throws ParseException {
+    jj_consume_token(14);
+    jj_consume_token(NAME);
+    jj_consume_token(15);
+    jj_consume_token(VALUE);
+    jj_consume_token(16);
+  }
+
+  final public void maquina() throws ParseException {
+    jj_consume_token(17);
+    jj_consume_token(NAME);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-    case MINUS:
-      jj_consume_token(MINUS);
-      element();
+    case 14:
+    case 19:
+    case 21:
+    case 23:
+    case 26:
+      label_4:
+      while (true) {
+        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+        case 14:
+        case 19:
+        case 21:
+        case 23:
+        case 26:
+          ;
+          break;
+        default:
+          jj_la1[4] = jj_gen;
+          break label_4;
+        }
+        cuerpoItem();
+      }
+      estado();
       break;
-    case CONSTANT:
-    case 12:
-      element();
+      estado();
+      label_5:
+      while (true) {
+        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+        case 14:
+        case 19:
+        case 21:
+        case 23:
+        case 26:
+          ;
+          break;
+        default:
+          jj_la1[5] = jj_gen;
+          break label_5;
+        }
+        cuerpoItem();
+      }
       break;
     default:
-      jj_la1[5] = jj_gen;
+      jj_la1[6] = jj_gen;
+      jj_consume_token(-1);
+      throw new ParseException();
+    }
+    jj_consume_token(18);
+  }
+
+  final public void cuerpoItem() throws ParseException {
+    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+    case 26:
+      label_6:
+      while (true) {
+        estado();
+        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+        case 26:
+          ;
+          break;
+        default:
+          jj_la1[7] = jj_gen;
+          break label_6;
+        }
+      }
+      break;
+    case 23:
+      label_7:
+      while (true) {
+        evento();
+        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+        case 23:
+          ;
+          break;
+        default:
+          jj_la1[8] = jj_gen;
+          break label_7;
+        }
+      }
+      break;
+    case 14:
+      label_8:
+      while (true) {
+        variable();
+        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+        case 14:
+          ;
+          break;
+        default:
+          jj_la1[9] = jj_gen;
+          break label_8;
+        }
+      }
+      break;
+    case 19:
+    case 21:
+      label_9:
+      while (true) {
+        transicion();
+        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+        case 19:
+        case 21:
+          ;
+          break;
+        default:
+          jj_la1[10] = jj_gen;
+          break label_9;
+        }
+      }
+      break;
+    default:
+      jj_la1[11] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
   }
 
-  final public void element() throws ParseException {
+  final public void transicion() throws ParseException {
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-    case CONSTANT:
-      jj_consume_token(CONSTANT);
+    case 19:
+      jj_consume_token(19);
+      jj_consume_token(NAME);
+      jj_consume_token(NAME);
+      jj_consume_token(20);
+      jj_consume_token(NAME);
+      jj_consume_token(18);
       break;
-    case 12:
-      jj_consume_token(12);
-      sum();
-      jj_consume_token(13);
+    case 21:
+      jj_consume_token(21);
+      jj_consume_token(TIME);
+      jj_consume_token(NAME);
+      jj_consume_token(20);
+      jj_consume_token(NAME);
+      jj_consume_token(18);
+      break;
+      jj_consume_token(19);
+      jj_consume_token(NAME);
+      jj_consume_token(22);
+      jj_consume_token(NAME);
+      jj_consume_token(18);
+      break;
+      jj_consume_token(19);
+      jj_consume_token(NAME);
+      jj_consume_token(20);
+      jj_consume_token(NAME);
+      jj_consume_token(18);
       break;
     default:
-      jj_la1[6] = jj_gen;
+      jj_la1[12] = jj_gen;
+      jj_consume_token(-1);
+      throw new ParseException();
+    }
+  }
+
+  final public void evento() throws ParseException {
+    jj_consume_token(23);
+    jj_consume_token(NAME);
+    llamado();
+    jj_consume_token(18);
+  }
+
+  final public void llamado() throws ParseException {
+    jj_consume_token(24);
+    jj_consume_token(PROOF);
+    jj_consume_token(25);
+  }
+
+  final public void estado() throws ParseException {
+    jj_consume_token(26);
+    jj_consume_token(NAME);
+    label_10:
+    while (true) {
+      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case 27:
+      case 28:
+      case 29:
+        ;
+        break;
+      default:
+        jj_la1[13] = jj_gen;
+        break label_10;
+      }
+      accion();
+    }
+    jj_consume_token(18);
+  }
+
+  final public void accion() throws ParseException {
+    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+    case 27:
+      jj_consume_token(27);
+      llamado();
+      jj_consume_token(18);
+      break;
+    case 28:
+      jj_consume_token(28);
+      llamado();
+      jj_consume_token(18);
+      break;
+    case 29:
+      jj_consume_token(29);
+      llamado();
+      jj_consume_token(18);
+      break;
+    default:
+      jj_la1[14] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -161,13 +328,13 @@ public class LRP implements LRPConstants {
   public Token jj_nt;
   private int jj_ntk;
   private int jj_gen;
-  final private int[] jj_la1 = new int[7];
+  final private int[] jj_la1 = new int[15];
   static private int[] jj_la1_0;
   static {
       jj_la1_init_0();
    }
    private static void jj_la1_init_0() {
-      jj_la1_0 = new int[] {0x1a40,0x60,0x60,0x180,0x180,0x1240,0x1200,};
+      jj_la1_0 = new int[] {0x25000,0x4000,0x20000,0x2000,0x4a84000,0x4a84000,0x4a84000,0x4000000,0x800000,0x4000,0x280000,0x4a84000,0x280000,0x38000000,0x38000000,};
    }
 
   /** Constructor with InputStream. */
@@ -181,7 +348,7 @@ public class LRP implements LRPConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 7; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 15; i++) jj_la1[i] = -1;
   }
 
   /** Reinitialise. */
@@ -195,7 +362,7 @@ public class LRP implements LRPConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 7; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 15; i++) jj_la1[i] = -1;
   }
 
   /** Constructor. */
@@ -205,7 +372,7 @@ public class LRP implements LRPConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 7; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 15; i++) jj_la1[i] = -1;
   }
 
   /** Reinitialise. */
@@ -215,7 +382,7 @@ public class LRP implements LRPConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 7; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 15; i++) jj_la1[i] = -1;
   }
 
   /** Constructor with generated Token Manager. */
@@ -224,7 +391,7 @@ public class LRP implements LRPConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 7; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 15; i++) jj_la1[i] = -1;
   }
 
   /** Reinitialise. */
@@ -233,7 +400,7 @@ public class LRP implements LRPConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 7; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 15; i++) jj_la1[i] = -1;
   }
 
   private Token jj_consume_token(int kind) throws ParseException {
@@ -284,12 +451,12 @@ public class LRP implements LRPConstants {
   /** Generate ParseException. */
   public ParseException generateParseException() {
     jj_expentries.clear();
-    boolean[] la1tokens = new boolean[14];
+    boolean[] la1tokens = new boolean[30];
     if (jj_kind >= 0) {
       la1tokens[jj_kind] = true;
       jj_kind = -1;
     }
-    for (int i = 0; i < 7; i++) {
+    for (int i = 0; i < 15; i++) {
       if (jj_la1[i] == jj_gen) {
         for (int j = 0; j < 32; j++) {
           if ((jj_la1_0[i] & (1<<j)) != 0) {
@@ -298,7 +465,7 @@ public class LRP implements LRPConstants {
         }
       }
     }
-    for (int i = 0; i < 14; i++) {
+    for (int i = 0; i < 30; i++) {
       if (la1tokens[i]) {
         jj_expentry = new int[1];
         jj_expentry[0] = i;
