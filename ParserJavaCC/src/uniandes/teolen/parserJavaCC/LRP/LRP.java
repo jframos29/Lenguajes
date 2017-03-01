@@ -39,7 +39,7 @@ public class LRP implements LRPConstants {
     }
   }
 
-  final public int one_line() throws ParseException {
+  static final public int one_line() throws ParseException {
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case 14:
     case 17:
@@ -58,7 +58,7 @@ public class LRP implements LRPConstants {
     throw new Error("Missing return statement in function");
   }
 
-  final public void sum() throws ParseException {
+  static final public void sum() throws ParseException {
     label_1:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -97,7 +97,7 @@ public class LRP implements LRPConstants {
     }
   }
 
-  final public void variable() throws ParseException {
+  static final public void variable() throws ParseException {
     jj_consume_token(14);
     jj_consume_token(NAME);
     jj_consume_token(15);
@@ -105,7 +105,7 @@ public class LRP implements LRPConstants {
     jj_consume_token(16);
   }
 
-  final public void maquina() throws ParseException {
+  static final public void maquina() throws ParseException {
     jj_consume_token(17);
     jj_consume_token(NAME);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -158,7 +158,7 @@ public class LRP implements LRPConstants {
     jj_consume_token(18);
   }
 
-  final public void cuerpoItem() throws ParseException {
+  static final public void cuerpoItem() throws ParseException {
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case 26:
       label_6:
@@ -225,7 +225,7 @@ public class LRP implements LRPConstants {
     }
   }
 
-  final public void transicion() throws ParseException {
+  static final public void transicion() throws ParseException {
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case 19:
       jj_consume_token(19);
@@ -262,20 +262,20 @@ public class LRP implements LRPConstants {
     }
   }
 
-  final public void evento() throws ParseException {
+  static final public void evento() throws ParseException {
     jj_consume_token(23);
     jj_consume_token(NAME);
     llamado();
     jj_consume_token(18);
   }
 
-  final public void llamado() throws ParseException {
+  static final public void llamado() throws ParseException {
     jj_consume_token(24);
     jj_consume_token(PROOF);
     jj_consume_token(25);
   }
 
-  final public void estado() throws ParseException {
+  static final public void estado() throws ParseException {
     jj_consume_token(26);
     jj_consume_token(NAME);
     label_10:
@@ -295,7 +295,7 @@ public class LRP implements LRPConstants {
     jj_consume_token(18);
   }
 
-  final public void accion() throws ParseException {
+  static final public void accion() throws ParseException {
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case 27:
       jj_consume_token(27);
@@ -319,16 +319,17 @@ public class LRP implements LRPConstants {
     }
   }
 
+  static private boolean jj_initialized_once = false;
   /** Generated Token Manager. */
-  public LRPTokenManager token_source;
-  SimpleCharStream jj_input_stream;
+  static public LRPTokenManager token_source;
+  static SimpleCharStream jj_input_stream;
   /** Current token. */
-  public Token token;
+  static public Token token;
   /** Next token. */
-  public Token jj_nt;
-  private int jj_ntk;
-  private int jj_gen;
-  final private int[] jj_la1 = new int[15];
+  static public Token jj_nt;
+  static private int jj_ntk;
+  static private int jj_gen;
+  static final private int[] jj_la1 = new int[15];
   static private int[] jj_la1_0;
   static {
       jj_la1_init_0();
@@ -343,6 +344,13 @@ public class LRP implements LRPConstants {
   }
   /** Constructor with InputStream and supplied encoding */
   public LRP(java.io.InputStream stream, String encoding) {
+    if (jj_initialized_once) {
+      System.out.println("ERROR: Second call to constructor of static parser.  ");
+      System.out.println("       You must either use ReInit() or set the JavaCC option STATIC to false");
+      System.out.println("       during parser generation.");
+      throw new Error();
+    }
+    jj_initialized_once = true;
     try { jj_input_stream = new SimpleCharStream(stream, encoding, 1, 1); } catch(java.io.UnsupportedEncodingException e) { throw new RuntimeException(e); }
     token_source = new LRPTokenManager(jj_input_stream);
     token = new Token();
@@ -352,11 +360,11 @@ public class LRP implements LRPConstants {
   }
 
   /** Reinitialise. */
-  public void ReInit(java.io.InputStream stream) {
+  static public void ReInit(java.io.InputStream stream) {
      ReInit(stream, null);
   }
   /** Reinitialise. */
-  public void ReInit(java.io.InputStream stream, String encoding) {
+  static public void ReInit(java.io.InputStream stream, String encoding) {
     try { jj_input_stream.ReInit(stream, encoding, 1, 1); } catch(java.io.UnsupportedEncodingException e) { throw new RuntimeException(e); }
     token_source.ReInit(jj_input_stream);
     token = new Token();
@@ -367,6 +375,13 @@ public class LRP implements LRPConstants {
 
   /** Constructor. */
   public LRP(java.io.Reader stream) {
+    if (jj_initialized_once) {
+      System.out.println("ERROR: Second call to constructor of static parser. ");
+      System.out.println("       You must either use ReInit() or set the JavaCC option STATIC to false");
+      System.out.println("       during parser generation.");
+      throw new Error();
+    }
+    jj_initialized_once = true;
     jj_input_stream = new SimpleCharStream(stream, 1, 1);
     token_source = new LRPTokenManager(jj_input_stream);
     token = new Token();
@@ -376,7 +391,7 @@ public class LRP implements LRPConstants {
   }
 
   /** Reinitialise. */
-  public void ReInit(java.io.Reader stream) {
+  static public void ReInit(java.io.Reader stream) {
     jj_input_stream.ReInit(stream, 1, 1);
     token_source.ReInit(jj_input_stream);
     token = new Token();
@@ -387,6 +402,13 @@ public class LRP implements LRPConstants {
 
   /** Constructor with generated Token Manager. */
   public LRP(LRPTokenManager tm) {
+    if (jj_initialized_once) {
+      System.out.println("ERROR: Second call to constructor of static parser. ");
+      System.out.println("       You must either use ReInit() or set the JavaCC option STATIC to false");
+      System.out.println("       during parser generation.");
+      throw new Error();
+    }
+    jj_initialized_once = true;
     token_source = tm;
     token = new Token();
     jj_ntk = -1;
@@ -403,7 +425,7 @@ public class LRP implements LRPConstants {
     for (int i = 0; i < 15; i++) jj_la1[i] = -1;
   }
 
-  private Token jj_consume_token(int kind) throws ParseException {
+  static private Token jj_consume_token(int kind) throws ParseException {
     Token oldToken;
     if ((oldToken = token).next != null) token = token.next;
     else token = token.next = token_source.getNextToken();
@@ -419,7 +441,7 @@ public class LRP implements LRPConstants {
 
 
 /** Get the next Token. */
-  final public Token getNextToken() {
+  static final public Token getNextToken() {
     if (token.next != null) token = token.next;
     else token = token.next = token_source.getNextToken();
     jj_ntk = -1;
@@ -428,7 +450,7 @@ public class LRP implements LRPConstants {
   }
 
 /** Get the specific Token. */
-  final public Token getToken(int index) {
+  static final public Token getToken(int index) {
     Token t = token;
     for (int i = 0; i < index; i++) {
       if (t.next != null) t = t.next;
@@ -437,19 +459,19 @@ public class LRP implements LRPConstants {
     return t;
   }
 
-  private int jj_ntk() {
+  static private int jj_ntk() {
     if ((jj_nt=token.next) == null)
       return (jj_ntk = (token.next=token_source.getNextToken()).kind);
     else
       return (jj_ntk = jj_nt.kind);
   }
 
-  private java.util.List<int[]> jj_expentries = new java.util.ArrayList<int[]>();
-  private int[] jj_expentry;
-  private int jj_kind = -1;
+  static private java.util.List<int[]> jj_expentries = new java.util.ArrayList<int[]>();
+  static private int[] jj_expentry;
+  static private int jj_kind = -1;
 
   /** Generate ParseException. */
-  public ParseException generateParseException() {
+  static public ParseException generateParseException() {
     jj_expentries.clear();
     boolean[] la1tokens = new boolean[30];
     if (jj_kind >= 0) {
@@ -480,11 +502,11 @@ public class LRP implements LRPConstants {
   }
 
   /** Enable tracing. */
-  final public void enable_tracing() {
+  static final public void enable_tracing() {
   }
 
   /** Disable tracing. */
-  final public void disable_tracing() {
+  static final public void disable_tracing() {
   }
 
 }

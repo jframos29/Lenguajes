@@ -1,11 +1,12 @@
 /**
  * JavaCC template file created by SF JavaCC plugin 1.5.28+ wizard for JavaCC 1.5.0+
- */options{  static = false;
+ */options{  static = true;
   }PARSER_BEGIN(LRP)package uniandes.teolen.parserJavaCC.LRP;
 
 public class LRP{  public static void main(String args []) throws ParseException  {    LRP parser = new LRP(System.in);    while (true)    {      System.out.println("Reading from standard input...");      System.out.print("Ingrese una expresion de LRP o punto y coma en caso de querer abandonar el programa.");      try      {        switch (LRP.one_line())        {          case 0 :           System.out.println("OK.");          break;          case 1 :           System.out.println("Goodbye.");
-          System.exit(-1);          break;          default :           break;        }      }      catch (Exception e)      {        System.out.println("NOK.");        System.out.println(e.getMessage());        LRP.ReInit(System.in);      }      catch (Error e)      {        System.out.println("Oops.");        System.out.println(e.getMessage());        break;      }    }  }}PARSER_END(LRP)SKIP :{  " "| "\r"| "\t"| "\n"}TOKEN :{
-  < VALUE : "false"|"true"|<  NAME >|< CONSTANT >>
+          System.exit(-1);          break;          default :           break;        }      }      catch (Exception e)      {        System.out.println("NOK.");        System.out.println(e.getMessage());        LRP.ReInit(System.in);      }      catch (Error e)      {        System.out.println("Oops.");        System.out.println(e.getMessage());        break;      }    }  }}PARSER_END(LRP)SKIP :{  " "| "\r"| "\t"| "\n"}
+TOKEN :{
+  < VALUE : "false"|"true"|< NAME >|< CONSTANT >>
 | < TIME : < NAME > <CONSTANT >>
 | < PROOF : (< NAME >|"|"|"+"|"-"|"*"|"/"|"&"|".")+ >| < CONSTANT : (< DIGIT >)+ >
 | < NAME : (< LETTER >)+ >
@@ -16,7 +17,7 @@ public class LRP{  public static void main(String args []) throws ParseExcepti
 void maquina() :
 {}
 {
-  "(machine" <  NAME >((cuerpoItem())*estado()|estado()(cuerpoItem())*) ")"
+  "(machine" < NAME > ((cuerpoItem())*estado()|estado()(cuerpoItem())*) ")"
 }
 
 void cuerpoItem() :
