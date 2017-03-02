@@ -1,0 +1,37 @@
+(machine follower
+(state moving (running [ robot move : [: msg | msg linear x : forward ]]) )
+(on outofline moving -> looking tlooking )
+(on intheline looking -> moving tmoving )
+(event outofline [ robot light data > lightlim +10])
+(event intheline [ robot light data < lightlim - 10])
+(state looking
+(machine lookalgo
+(var time := [ maxlook ])
+(state lookleft
+(running [ robot move : [: msg | msg angular z : search ]]) )
+(state returnleft
+(running [ robot move : [: msg | msg angular z : search * -1]]) )
+(state lookright
+(running [ robot move : [: msg | msg angular z : search * -1]]) )
+(state returnright
+(running [ robot move : [: msg | msg angular z : search ]])
+(onexit [ time := time * 2]) )
+(ontime time lookleft -> returnleft treturnleft )
+(ontime time returnleft -> lookright tlookright )
+(ontime time lookright -> returnright treturnright )
+(ontime time returnright -> lookleft tlookleft ) )
+(onentry (spawn lookalgo lookleft ) ) )
+(var nobump := [ true ])
+(event bumping [ robot bumper data === 1 & nobump ])
+(event ending [ robot bumper data === 1 & nobump not])
+(on bumping *-> bumpback )
+(on ending *-> end tend )
+(state bumpback
+(onentry [ nobump = false ])
+(running [ robot move : [: msg | msg linear x : back ]]) )
+(state bumpturn
+(running [ robot move : [: msg | msg angular z : search ]]) )
+(ontime 1000 bumpback -> bumpturn )
+(ontime 3000 bumpturn -> looking )
+(state end ) )
+(spawn follower looking )

@@ -1,23 +1,47 @@
 /**
  * JavaCC template file created by SF JavaCC plugin 1.5.28+ wizard for JavaCC 1.5.0+
- */options{  static = true;
+ */options{  static = false;
+  DEBUG_PARSER = true; 
   }PARSER_BEGIN(LRP)package uniandes.teolen.parserJavaCC.LRP;
 
 public class LRP{  public static void main(String args []) throws ParseException  {    LRP parser = new LRP(System.in);    while (true)    {      System.out.println("Reading from standard input...");      System.out.print("Ingrese una expresion de LRP o punto y coma en caso de querer abandonar el programa.");      try      {        switch (LRP.one_line())        {          case 0 :           System.out.println("OK.");          break;          case 1 :           System.out.println("Goodbye.");
           System.exit(-1);          break;          default :           break;        }      }      catch (Exception e)      {        System.out.println("NOK.");        System.out.println(e.getMessage());        LRP.ReInit(System.in);      }      catch (Error e)      {        System.out.println("Oops.");        System.out.println(e.getMessage());        break;      }    }  }}PARSER_END(LRP)SKIP :{  " "| "\r"| "\t"| "\n"}
 TOKEN :{
-  < VALUE : "false"|"true"|< NAME >|< CONSTANT >>
+  < SPAWN: "spawn" >
+| < FLECHA: "->" >
+| < WILD: "*->" >  
+| < ONTIME: "(ontime" >
+| < ON: "(on" >
+| < M: "(machine" >
+| < VALUE : "false"|"true">
 | < TIME : < NAME > <CONSTANT >>
-| < PROOF : (< NAME >|"|"|"+"|"-"|"*"|"/"|"&"|".")+ >| < CONSTANT : (< DIGIT >)+ >
+| < PROOF : ("|"|"+"|"-"|"*"|"/"|"&"|".")+ >| < CONSTANT : (< DIGIT >)+ >
 | < NAME : (< LETTER >)+ >
 | < #LETTER : ["a"-"z"] >| < #DIGIT : [ "0"-"9" ] >}int one_line() :{}{  sum()  {    return 0;  }| ";"  {    return 1;  }}void sum() :{}{
     (      variable()    )*    (      maquina()
     )+    (
-      "spawn"    )+}void variable() :{}{  "(var" < NAME > ":=[" < VALUE > " ])" }
+      < SPAWN >    )+}void variable() :{}{  "(var" < NAME > ":=[" valor() " ])" }
+
+void valor():
+{}
+{< VALUE >|< NAME >|< CONSTANT >
+}
 void maquina() :
 {}
 {
-  "(machine" < NAME > ((cuerpoItem())*estado()|estado()(cuerpoItem())*) ")"
+  < M > < NAME > (estado())*cuerpoItem() ")"
+}
+
+void estado1() :
+{}
+{
+cuerpoItem()(estado())*
+}
+
+void estado2() :
+{}
+{
+(estado())*cuerpoItem()
 }
 
 void cuerpoItem() :
@@ -32,23 +56,48 @@ void cuerpoItem() :
 void transicion() :
 {}
 {
-  "(on" < NAME >< NAME >"- >"< NAME >")"
-| "(ontime" < TIME >< NAME >"- >"< NAME >")"
-| "(on" < NAME >"*- >"< NAME >")"
-| "(on" < NAME >"- >"< NAME >")"
-}  
+  on()
+| ontime()
+
+}
+
+void on() :
+{}
+{
+  < ON ><NAME >([<NAME >] <FLECHA >|< WILD >) < NAME > ")"
+}
+
+void ontime() :
+{}
+{
+< ONTIME >time()<NAME ><FLECHA >< NAME >")"
+}
+
+void time() :
+{}
+{
+< NAME > <CONSTANT >
+}    
 
 void evento() :
 {}
 {
-  "(event" < NAME > llamado() ")"
+  "(event" < NAME > call() ")"
 }
 
-void llamado() :
+void call() :
 {}
 {
-  "["<PROOF>"]"
+  "["proof()"]"
 }
+
+void proof():
+{}
+{
+<NAME>
+|<PROOF>
+}
+
 
 void estado() :
 {}
@@ -59,7 +108,7 @@ void estado() :
 void accion() :
 {}
 {
-"(onentry" llamado() ")"
-| "(onexit" llamado() ")"
-| "(running" llamado() ")"
+"(onentry" call() ")"
+| "(onexit" call() ")"
+| "(running" call() ")"
 }

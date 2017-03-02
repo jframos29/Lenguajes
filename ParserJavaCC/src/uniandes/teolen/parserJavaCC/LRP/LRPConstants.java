@@ -11,19 +11,31 @@ public interface LRPConstants {
   /** End of File. */
   int EOF = 0;
   /** RegularExpression Id. */
-  int VALUE = 5;
+  int SPAWN = 5;
   /** RegularExpression Id. */
-  int TIME = 6;
+  int FLECHA = 6;
   /** RegularExpression Id. */
-  int PROOF = 7;
+  int WILD = 7;
   /** RegularExpression Id. */
-  int CONSTANT = 8;
+  int ONTIME = 8;
   /** RegularExpression Id. */
-  int NAME = 9;
+  int ON = 9;
   /** RegularExpression Id. */
-  int LETTER = 10;
+  int M = 10;
   /** RegularExpression Id. */
-  int DIGIT = 11;
+  int VALUE = 11;
+  /** RegularExpression Id. */
+  int TIME = 12;
+  /** RegularExpression Id. */
+  int PROOF = 13;
+  /** RegularExpression Id. */
+  int CONSTANT = 14;
+  /** RegularExpression Id. */
+  int NAME = 15;
+  /** RegularExpression Id. */
+  int LETTER = 16;
+  /** RegularExpression Id. */
+  int DIGIT = 17;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -35,6 +47,12 @@ public interface LRPConstants {
     "\"\\r\"",
     "\"\\t\"",
     "\"\\n\"",
+    "\"spawn\"",
+    "\"->\"",
+    "\"*->\"",
+    "\"(ontime\"",
+    "\"(on\"",
+    "\"(machine\"",
     "<VALUE>",
     "<TIME>",
     "<PROOF>",
@@ -43,16 +61,10 @@ public interface LRPConstants {
     "<LETTER>",
     "<DIGIT>",
     "\";\"",
-    "\"spawn\"",
     "\"(var\"",
     "\":=[\"",
     "\" ])\"",
-    "\"(machine\"",
     "\")\"",
-    "\"(on\"",
-    "\"- >\"",
-    "\"(ontime\"",
-    "\"*- >\"",
     "\"(event\"",
     "\"[\"",
     "\"]\"",
