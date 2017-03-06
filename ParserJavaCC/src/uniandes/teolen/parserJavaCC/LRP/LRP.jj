@@ -17,8 +17,9 @@ public class LRP{  public static void main(String args []) throws ParseExcepti
 | < TIME : < NAME > <CONSTANT >>
 | < PROOF : ("|"|"+"|"-"|"*"|"/"|"&"|".")+ >| < CONSTANT : (< DIGIT >)+ >
 | < NAME : (< LETTER >)+ >
+| < PHRASE: (< NAME >" "|" ")+ >
 | < #LETTER : ["a"-"z"] >| < #DIGIT : [ "0"-"9" ] >}int one_line() :{}{  sum()  {    return 0;  }| ";"  {    return 1;  }}void sum() :{}{
-    (      variable()    )*    (      maquina()("("< SPAWN > <NAME> <NAME>")")    )+}void variable() :{}{  "(var" < NAME > ":=[" valor() " ])" }
+    (      variable()    )*    (      maquina()"("< SPAWN > <NAME> <NAME>")"    )+}void variable() :{}{  "(var" < NAME > ":=[" valor() " ])" }
 
 void valor():
 {}
@@ -27,20 +28,9 @@ void valor():
 void maquina() :
 {}
 {
-  < M > < NAME >  estado() ")"
+  < M > < NAME > (cuerpoItem())* estado() (cuerpoItem())* ")"
 }
 
-/*void estado1() :
-{}
-{
-cuerpoItem()(estado())*
-}
-
-void estado2() :
-{}
-{
-(estado())*cuerpoItem()
-}*/
 
 void cuerpoItem() :
 {}
@@ -50,6 +40,7 @@ void cuerpoItem() :
 | (variable())+
 | (transicion())+
 }
+
 
 void transicion() :
 {}
@@ -91,11 +82,24 @@ void call() :
 
 void proof():
 {}
-{
-<NAME>
-|<PROOF>
+{   
+asignacion()
+|<VALUE>
+| (< PHRASE >"|")? mensaje()
 }
 
+void mensaje() :
+{}
+{
+< NAME > <PHRASE > (":" < NAME ><PHRASE>)*
+}
+
+
+void asignacion():
+{}
+{
+< NAME >":="valor()
+}
 
 void estado() :
 {}
