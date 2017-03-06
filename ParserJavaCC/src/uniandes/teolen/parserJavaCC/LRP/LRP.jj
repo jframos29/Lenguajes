@@ -18,9 +18,7 @@ public class LRP{  public static void main(String args []) throws ParseExcepti
 | < PROOF : ("|"|"+"|"-"|"*"|"/"|"&"|".")+ >| < CONSTANT : (< DIGIT >)+ >
 | < NAME : (< LETTER >)+ >
 | < #LETTER : ["a"-"z"] >| < #DIGIT : [ "0"-"9" ] >}int one_line() :{}{  sum()  {    return 0;  }| ";"  {    return 1;  }}void sum() :{}{
-    (      variable()    )*    (      maquina()
-    )+    (
-      < SPAWN >    )+}void variable() :{}{  "(var" < NAME > ":=[" valor() " ])" }
+    (      variable()    )*    (      maquina()("("< SPAWN > <NAME> <NAME>")")    )+}void variable() :{}{  "(var" < NAME > ":=[" valor() " ])" }
 
 void valor():
 {}
@@ -29,10 +27,10 @@ void valor():
 void maquina() :
 {}
 {
-  < M > < NAME > (estado())*cuerpoItem() ")"
+  < M > < NAME >  estado() ")"
 }
 
-void estado1() :
+/*void estado1() :
 {}
 {
 cuerpoItem()(estado())*
@@ -42,7 +40,7 @@ void estado2() :
 {}
 {
 (estado())*cuerpoItem()
-}
+}*/
 
 void cuerpoItem() :
 {}
